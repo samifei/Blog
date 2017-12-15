@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS 日常宏定义大全</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">iOS 日常宏定义大全</h1>
+        <div class="show-content">
+          <p>宏定义文件 github地址：<a href="https://github.com/luran2358/LRMacroDefinition" target="_blank">https://github.com/luran2358/LRMacroDefinition</a><br></p><p>1.获取屏幕宽度与高度<br></p><p>#defineSCREEN_WIDTH[UIScreen mainScreen].bounds.size.width</p><p>#defineSCREENH_HEIGHT[UIScreen mainScreen].bounds.size.height</p><p>根据一个网友(脱离语言)提醒, 如果支持横屏可以用下面的宏:</p><p>#if__IPHONE_OS_VERSION_MAX_ALLOWED &gt;=80000// 当前Xcode支持iOS8及以上</p><p>#define SCREEN_WIDTH ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]?[UIScreen mainScreen].nativeBounds.size.width/[UIScreen mainScreen].nativeScale:[UIScreen mainScreen].bounds.size.width)</p><p>#define SCREENH_HEIGHT ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]?[UIScreen mainScreen].nativeBounds.size.height/[UIScreen mainScreen].nativeScale:[UIScreen mainScreen].bounds.size.height)</p><p>#define SCREEN_SIZE ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]?CGSizeMake([UIScreen mainScreen].nativeBounds.size.width/[UIScreen mainScreen].nativeScale,[UIScreen mainScreen].nativeBounds.size.height/[UIScreen mainScreen].nativeScale):[UIScreen mainScreen].bounds.size)</p><p>#else</p><p>#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width</p><p>#define SCREENH_HEIGHT [UIScreen mainScreen].bounds.size.height</p><p>#define SCREEN_SIZE [UIScreen mainScreen].bounds.size</p><p>#endif</p><p>2.获取通知中心</p><p>#defineLRNotificationCenter [NSNotificationCenter defaultCenter]</p><p>3.设置随机颜色</p><p>#define LRRandomColor [UIColor colorWithRed:arc4random_uniform(256)/255.0green:arc4random_uniform(256)/255.0blue:arc4random_uniform(256)/255.0alpha:1.0]</p><p>4.设置RGB颜色/设置RGBA颜色</p><p>#defineLRRGBColor(r, g, b)[UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]</p><p>#defineLRRGBAColor(r, g, b, a)[UIColor colorWithRed:(r)/255.0 green:(r)/255.0 blue:(r)/255.0 alpha:a]</p><p>// clear背景颜色</p><p>#defineLRClearColor[UIColor clearColor]</p><p>5.自定义高效率的 NSLog</p><p>项目开发中，我们会在许多地方加上Log，但是发布的时候又不想用这些Log，我们也不可能一个一个的删除，所以自定义Log是必然的！</p><p>#ifdefDEBUG</p><p>#defineLRLog(...) NSLog(@"%s 第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])</p><p>#else</p><p>#defineLRLog(...)</p><p>#endif</p><p>6.弱引用/强引用</p><p>#define LRWeakSelf(type)__weaktypeof(type)weak##type=type;</p><p>#define LRStrongSelf(type)__strongtypeof(type)type= weak##type;</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/304454-cc2eea4fba6a32dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/304454-cc2eea4fba6a32dc.png?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><p>使用方法.png</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/304454-481ae7d55dda413c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/304454-481ae7d55dda413c.png?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><p>第二种使用方法，定义完弱引用宏之后，直接敲weak.png</p><p>7.设置 view 圆角和边框</p><p>#define LRViewBorderRadius(View, Radius, Width, Color)\\</p><p>[View.layer setCornerRadius:(Radius)];\</p><p>[View.layer setMasksToBounds:YES];\</p><p>[View.layer setBorderWidth:(Width)];\</p><p>[View.layer setBorderColor:[Color CGColor]]</p><p>8.由角度转换弧度 由弧度转换角度</p><p>#defineLRDegreesToRadian(x) (M_PI * (x) /180.0)</p><p>#defineLRRadianToDegrees(radian) (radian*180.0)/(M_PI)</p><p>9.设置加载提示框（第三方框架：<a href="https://github.com/scalessec/Toast" target="_blank">Toast</a>）</p><p>此宏定义非常好用，但是小伙伴需要CocoaPods导入第三方框架：<a href="https://github.com/scalessec/Toast" target="_blank">Toast</a></p><p>使用方法如下：</p><p>LRToast(@"网络加载失败");</p><p>#define LRToast(str)              CSToastStyle *style = [[CSToastStyle alloc] initWithDefaultStyle]; \</p><p>[kWindow  makeToast:str duration:0.6position:CSToastPositionCenter style:style];\</p><p>kWindow.userInteractionEnabled = NO; \</p><p>dispatch_after(dispatch_time(DISPATCH_TIME_NOW,(int64_t)(0.6* NSEC_PER_SEC)),dispatch_get_main_queue(),^{\</p><p>kWindow.userInteractionEnabled = YES;\</p><p>});\</p><p>10.设置加载提示框（第三方框架：<a href="https://github.com/jdg/MBProgressHUD" target="_blank">MBProgressHUD</a>）</p><p>此宏定义同上一个类似，如下图：</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/304454-602d66139ac831a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/304454-602d66139ac831a0.png?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><p>MBProgressHUD提示框.png</p><p>// 加载</p><p>#definekShowNetworkActivityIndicator() [UIApplication sharedApplication].networkActivityIndicatorVisible = YES</p><p>// 收起加载</p><p>#defineHideNetworkActivityIndicator()      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO</p><p>// 设置加载</p><p>#defineNetworkActivityIndicatorVisible(x)  [UIApplication sharedApplication].networkActivityIndicatorVisible = x</p><p>#definekWindow [UIApplication sharedApplication].keyWindow</p><p>#definekBackView         for (UIView *item in kWindow.subviews) { \</p><p>if(item.tag ==10000) \</p><p>{ \</p><p>[item removeFromSuperview]; \</p><p>UIView * aView = [[UIViewalloc] init]; \</p><p>aView.frame = [UIScreen mainScreen].bounds; \</p><p>aView.tag =10000; \</p><p>aView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3]; \</p><p>[kWindow addSubview:aView]; \</p><p>} \</p><p>} \</p><p>#definekShowHUDAndActivity kBackView;[MBProgressHUD showHUDAddedTo:kWindow animated:YES];kShowNetworkActivityIndicator()</p><p>#definekHiddenHUD [MBProgressHUD hideAllHUDsForView:kWindow animated:YES]</p><p>#definekRemoveBackView         for (UIView *item in kWindow.subviews) { \</p><p>if(item.tag ==10000) \</p><p>{ \</p><p>[UIView animateWithDuration:0.4animations:^{ \</p><p>item.alpha =0.0; \</p><p>} completion:^(BOOL finished) { \</p><p>[item removeFromSuperview]; \</p><p>}]; \</p><p>} \</p><p>} \</p><p>#definekHiddenHUDAndAvtivity kRemoveBackView;kHiddenHUD;HideNetworkActivityIndicator()</p><p>11.获取view的frame/图片资源</p><p>//获取view的frame（不建议使用）</p><p>//#define kGetViewWidth(view)  view.frame.size.width</p><p>//#define kGetViewHeight(view) view.frame.size.height</p><p>//#define kGetViewX(view)      view.frame.origin.x</p><p>//#define kGetViewY(view)      view.frame.origin.y</p><p>//获取图片资源</p><p>#define kGetImage(imageName) [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName]]</p><p>12.获取当前语言</p><p>#defineLRCurrentLanguage([[NSLocale preferredLanguages]objectAtIndex:0])</p><p>13.使用 ARC 和 MRC</p><p>#if__has_feature(objc_arc)</p><p>// ARC</p><p>#else</p><p>// MRC</p><p>#endif</p><p>14.判断当前的iPhone设备/系统版本</p><p>//判断是否为iPhone</p><p>#defineIS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)</p><p>#defineIS_IPHONE ([[[UIDevice currentDevice] model] isEqualToString:@"iPhone"])</p><p>//判断是否为iPad</p><p>#defineIS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)</p><p>#defineIS_IPAD ([[[UIDevice currentDevice] model] isEqualToString:@"iPad"])</p><p>//判断是否为ipod</p><p>#defineIS_IPOD ([[[UIDevice currentDevice] model] isEqualToString:@"iPod touch"])</p><p>// 判断是否为 iPhone 5SE</p><p>#defineiPhone5SE [[UIScreen mainScreen] bounds].size.width == 320.0f &amp;&amp; [[UIScreen mainScreen] bounds].size.height == 568.0f</p><p>// 判断是否为iPhone 6/6s</p><p>#defineiPhone6_6s [[UIScreen mainScreen] bounds].size.width == 375.0f &amp;&amp; [[UIScreen mainScreen] bounds].size.height == 667.0f</p><p>// 判断是否为iPhone 6Plus/6sPlus</p><p>#defineiPhone6Plus_6sPlus [[UIScreen mainScreen] bounds].size.width == 414.0f &amp;&amp; [[UIScreen mainScreen] bounds].size.height == 736.0f</p><p>//获取系统版本</p><p>//这个方法不是特别靠谱</p><p>#defineIOS_SYSTEM_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]</p><p>//建议使用这个方法</p><p>#defineIOS_SYSTEM_STRING [[UIDevice currentDevice] systemVersion]</p><p>//判断 iOS 8 或更高的系统版本</p><p>#defineIOS_VERSION_8_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] &gt;=8.0)? (YES):(NO))</p><p>15.判断是真机还是模拟器</p><p>// 判断是不是iOS系统，如果是iOS系统在真机和模拟器输出都是YES</p><p>#ifTARGET_OS_IPHONE</p><p>#endif</p><p>#if(TARGET_IPHONE_SIMULATOR)</p><p>// 在模拟器的情况下</p><p>#else</p><p>// 在真机情况下</p><p>#endif</p><p>16.沙盒目录文件</p><p>//获取temp</p><p>#definekPathTemp NSTemporaryDirectory()</p><p>//获取沙盒 Document</p><p>#definekPathDocument [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]</p><p>//获取沙盒 Cache</p><p>#definekPathCache [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]</p><p>17.GCD 的宏定义</p><p>很多小伙伴都非常烦写GCD的方法，所以在此定义为宏使用更加方便简洁！如下图：</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/304454-bc44484522f362bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/304454-bc44484522f362bf.png?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><p>GCD 宏使用方法.png</p><p>//GCD - 一次性执行</p><p>#definekDISPATCH_ONCE_BLOCK(onceBlock)staticdispatch_once_tonceToken;dispatch_once(&amp;onceToken, onceBlock);</p><p>//GCD - 在Main线程上运行</p><p>#definekDISPATCH_MAIN_THREAD(mainQueueBlock)dispatch_async(dispatch_get_main_queue(), mainQueueBlock);</p><p>//GCD - 开启异步线程</p><p>#definekDISPATCH_GLOBAL_QUEUE_DEFAULT(globalQueueBlock)dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), globalQueueBlocl);</p><p>宏与const 的使用:</p><p>很多小伙伴在定义一个常量字符串，都会定义成一个宏，最典型的例子就是服务器的地址。在此所有用宏定义常量字符的小伙伴以后就用const来定义吧！为什么呢 ？我们看看：</p><p>宏的用法： 一般字符串抽成宏，代码抽成宏使用。</p><p>const用法：一般常用的字符串定义成const（对于常量字符串苹果推荐我们使用const）。</p><p>宏与const区别：</p><p>1.编译时刻不同，宏属于预编译，const属于编译时刻</p><p>2.宏能定义代码，const不能，多个宏对于编译会相对时间较长，影响开发效率，调试过慢，const只会编译一次，缩短编译时间。</p><p>3.宏不会检查错误，const会检查错误</p><p>通过以上对比，我们以后在开发中如果定义一个常量字符串就用const，定义代码就用宏。我们来看看如何使用const，列举实际项目使用方法如下图：</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/304454-5b891c399f7c905b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/304454-5b891c399f7c905b.png?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><p>FANCommonConst.h中声明一个常量字符串.png</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/304454-3f9f88fe9ba5c746.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/304454-3f9f88fe9ba5c746.png?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><p>FANCommonConst.m中实现一个常量字符串.png</p><p>本文转载自别人，只为记录查询方便。</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

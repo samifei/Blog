@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CocoaPods使用</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">CocoaPods使用</h1>
+        <div class="show-content">
+          <p>已经有最新的cocoa pods 客户端，最下方有连接截图。</p><p>今天建立新工程CocoaPods出各种错误，所以写个流程，方便以后使用，（不是教程，自己的用法记录）</p><p>要想在你的工程中创建Podfile文件，必须先要进到该工程目录下（我一般先关闭工程Xcode）<br></p><p>终端输入：$ cd/Users/liyang/Desktop/CocoaPodsTest</p><p>进来之后就创建</p><p>终端输入：$touch Podfile</p><p>然后你在你的工程目录下可以看到    多了一个Podfile文件</p><p>使用vim编辑Podfile文件</p><p>终端输入：$vim Podfile</p><p>进入如下界面：</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/304454-5e47cc63b352021c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/304454-5e47cc63b352021c.png?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><p>编辑Podfile文件</p><p>进来之后紧接着按键盘上的英文『  i   』键</p><p>下面的"Podsfile" 0L, 0C将变成-- INSERT --</p><p>标准样式：（直接在可用的podfile  copy的）</p><p>platform :ios,'8.0'</p><p>target</p><p>'MasonryTest'do</p><p>pod</p><p>"AFNetworking","~&gt; 3.1.0"</p><p>pod</p><p>"MBProgressHUD","~&gt;0.8"</p><p>end</p><p>『网上样式库都是单引号，我这是双引号』</p><p>然后就可以编辑文字了，输入以下文字（这是网上的一些教程，先抄过来）</p><p>platform :ios, '7.0'</p><p>target 'MyApp' do</p><p>pod "AFNetworking", "~&gt; 3.1.0"</p><p>end</p><p>解释一下，'MyApp'就是你自己的工程名字，platform :ios, '7.0'代表当前AFNetworking支持的iOS最低版本是iOS 7.0, '~&gt; 3.1.0'代表要下载的AFNetworking版本是3.1.0及以上版本</p><p>编辑完之后成如下样子：</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/304454-99bb1541215a24c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/304454-99bb1541215a24c4.png?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><p>编辑完成要退出</p><p>先按左上角的esc键，再按：键，再输入wq，点击回车</p><p>终端输入：$ podinstall</p><p>这就开始下载了</p><p>再次打开工程目录会看到多了一个后缀名为.xcworkspace文件。</p><p>如果想再次增加新的库方法如下：</p><p>1.可以直接在Xcode  在Podfile文件添加库引入文字</p><p>2.用终端命令：</p><p>cd 工程目录</p><p>vim Podfile（如上编辑Podfile ,并保存）</p><p>最终在终端输入</p><p>pod install</p><p>（用终端有种莫名装逼感觉。）</p><p>https://cocoapods.org/app</p><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/304454-1203b9b9e37da0be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/304454-1203b9b9e37da0be.png?imageMogr2/auto-orient/strip" data-image-slug="1203b9b9e37da0be" data-width="2404" data-height="1344"><br><div class="image-caption"></div>
+</div><p>结束</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
